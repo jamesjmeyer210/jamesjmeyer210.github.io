@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/spectre.min.css"> 
     <link rel="stylesheet" href="css/spectre-exp.min.css">
     <link rel="stylesheet" href="css/spectre-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <title>James Meyer</title>
 </head>
 </body>
@@ -37,38 +38,6 @@
     </div>
     <script>
         'use strict';
-
-        const manifest = {
-            resume: "site/resume.html",
-            contact: "site/contact.html",
-            blogs: "site/blog.html",
-        };
-
-        const retrieve = (key, value) => {
-            fetch(value)
-                .then(response => {
-                    if(!response.ok) {
-                        throw new Error(`Error retrieving ${resource}\nHttp status: ${response.status}`);
-                    }
-                    return response.text();
-                })
-                .then(text => {
-                    console.log("Success!");
-                    window.sessionStorage.setItem(key, text);
-                });
-        };
-
-        Object.keys(manifest).forEach(key => {
-            retrieve(key, manifest[key]);
-        });
-        
-        window.addEventListener('load', (event) => {
-            console.log(event);
-        });
-        window.addEventListener('hashchange', (event) => {
-            const url = window.location.hash.slice(1) || "/";
-            document.getElementById('app').innerHTML = window.sessionStorage.getItem(url);
-        });
     </script>
 </body>
 </html>
