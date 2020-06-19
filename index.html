@@ -7,16 +7,10 @@
     <link rel="stylesheet" href="css/spectre-exp.min.css">
     <link rel="stylesheet" href="css/spectre-icons.min.css">
     <title>James Meyer</title>
-    <!-- <style>
-        nav {
-            top: 1rem;
-            bottom: 1rem;
-        }
-    </style> -->
 </head>
 </body>
     <div class="container">
-        <nav style="border-color: #3634d2; border-width: 2px; border-style: solid; border-radius: 4px;">
+        <nav id="nav" style="border-color: #3634d2; border-width: 2px; border-style: solid; border-radius: 4px;">
             <header class="navbar" style="margin: 1rem;">
                 <section class="navbar-section">
                     <a href="#" class="btn btn-link">Resume</a>
@@ -24,7 +18,7 @@
                     <a href="#" class="btn btn-link">Contact</a>
                 </section>
                 <section class="navbar-center">
-                    <a href="#" class="navbar-brand mr-2 text-bold">James Meyer</a>
+                    <a href="#" class="navbar-brand mr-2 text-bold">James J Meyer</a>
                 </section>
                 <section class="navbar-section">
                     <div class="input-group input-inline">
@@ -34,69 +28,56 @@
                 </section>
             </header>
         </nav>
+        <div class="columns" style="margin-top: 2rem; margin-bottom: 2rem;">
+            <div class="column col-4">
+                <div class="text-right">
+                    Loading...
+                </div>
+            </div>
+            <div class="column col-8">
+                <div class="text-left">
+                    Retrieved: something.html
+                </div>
+            </div>
+        </div>   
+        <div class="columns" style="margin-top: 2rem; margin-bottom: 2rem;">
+            <div class="column col-2"></div>
+            <div class="column col-8 text-center">
+                <div class="bar">
+
+                </div>
+            </div>
+            <div class="column col-2"></div>
+        </div>
+        <footer class="container" style="position: fixed; left: 0; bottom: 0;">
+            <p>Created by James Meyer</p>
+        </footer>
     </div>
-<!-- <script type="text/javascript" src="js/showdown.min.js"></script>
-    <script type="text/javascript" src="js/resume.js"></script>
-    <script type="text/javascript" src="js/blog.js"></script>
     <script>
-        const nav = {
-            resume: document.getElementById('resume-panel'),
-            projects: document.getElementById('projects-panel'),
-            blog: document.getElementById('blog-panel'),
+        'use strict';
+
+        const manifest = {
+            resume: "site/resume.html",
+            contact: "site/contact.html",
+            blogs: "site/blog.html",
         };
 
-        const page = {
-            resume: document.getElementById('resume-page'),
-            projects: document.getElementById('projects-page'),
-            blog: document.getElementById('blog-page'),
-        };
-        
-        const importData = (file, callback) => {
-            let req = new XMLHttpRequest();
-            req.open('GET', `${window.origin}/${file}`);
-            req.addEventListener('load', (event) => {
-                callback(event.srcElement.response);
-            });
-            req.send();
+        const retrieve = (resource) => {
+            fetch(resource)
+                .then(response => {
+                    if(!response.ok) {
+                        throw new Error(`Error retrieving ${resource}\nHttp status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(text => {
+                    console.log("Success!");
+                });
         };
 
-        const hideElement = (id) => { id.className = 'hide'; };
-
-        const unhideElement = (id) => { id.className = 'container'; };
-
-        importData('site/resume.html', (response) => {
-            page.resume.innerHTML = response;
-        
-            nav.resume.onclick = () => {
-                hideElement(page.projects);
-                hideElement(page.blog);
-                unhideElement(page.resume);
-            };
-
-            resume(); // run the resume.js file
+        Object.values(manifest).forEach(value => {
+            retrieve(value);
         });
-
-        let mdToHtml = new showdown.Converter();
-
-        importData('site/projects.md', (response) => {
-            page.projects.innerHTML = mdToHtml.makeHtml(response);
-        
-            nav.projects.onclick = () => {
-                hideElement(page.resume);
-                hideElement(page.blog);
-                unhideElement(page.projects);
-            };
-        });
-
-        importData('site/blog.md', (response) => {
-            page.blog.innerHTML = mdToHtml.makeHtml(response);
-        
-            nav.blog.onclick = () => {
-                hideElement(page.resume);
-                hideElement(page.projects);
-                unhideElement(page.blog);
-            };
-        });
-    </script> -->
+    </script>
 </body>
 </html>
