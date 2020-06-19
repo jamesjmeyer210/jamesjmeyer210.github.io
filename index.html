@@ -28,8 +28,8 @@
                 </section>
             </header>
         </nav>
-        <main id="app">
-            <div class="columns" style="margin-top: 2rem; margin-bottom: 2rem;">
+        <main id="app" style="margin-top: 2rem; margin-bottom: 2rem;">
+            <div class="columns">
                 <div class="column col-4">
                     <div class="text-right">
                         Loading...
@@ -64,8 +64,8 @@
             blogs: "site/blog.html",
         };
 
-        const retrieve = (resource) => {
-            fetch(resource)
+        const retrieve = (key, value) => {
+            fetch(value)
                 .then(response => {
                     if(!response.ok) {
                         throw new Error(`Error retrieving ${resource}\nHttp status: ${response.status}`);
@@ -74,20 +74,20 @@
                 })
                 .then(text => {
                     console.log("Success!");
-                    window.sessionStorage.setItem(resource, text);
+                    window.sessionStorage.setItem(key, text);
                 });
         };
 
-        Object.values(manifest).forEach(value => {
-            retrieve(value);
+        Object.keys(manifest).forEach(key => {
+            retrieve(key, manifest[key]);
         });
-
+        
         window.addEventListener('load', (event) => {
             console.log(event);
         });
         window.addEventListener('hashchange', (event) => {
             const url = window.location.hash.slice(1) || "/";
-            console.log(url);
+            document.getElementById('app').innerHTML = window.sessionStorage.getItem(url);
         });
     </script>
 </body>
